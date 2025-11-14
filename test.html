@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <h1 id="status"></h1>
+    <p id="message"></p>
+</head>
+<body>
+
+    <script>
+        const urltest = "http://localhost:8000/api/logout";
+        async function test(){
+            const res = await fetch(urltest,{"method": "POST"});
+            // detect status code
+           const data = await res.json();
+           console.log(data);
+           document.getElementById("status").innerHTML = data.status;
+           document.getElementById("message").innerHTML = data.message;
+        }
+        test();
+    </script>
+</body>
+</html>
