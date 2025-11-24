@@ -15,24 +15,24 @@ class ApiKey
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!$request->header("api-key")){
-            return response()->json([
-                "message" => "api key not found"
-            ], 401);
-        }
-        if($request->header("api-key") != '123' && $request->header("api-key") != '456'){
-            return response()->json([
-                "message" => "invalid api key"
-            ]);
-        }
-        if ($request->header("api-key") == '123'){
-            return $next($request);
-        }
-        if ($request->header("api-key") == '456'){
-            return response()->json([
-                "message" => "no permission to access from mobile app"
-            ], 401);
-        }
-        // return $next($request);
+        // if (!$request->header("api-key")){
+        //     return response()->json([
+        //         "message" => "api key not found"
+        //     ], 401);
+        // }
+        // if($request->header("api-key") != '123' && $request->header("api-key") != '456'){
+        //     return response()->json([
+        //         "message" => "invalid api key"
+        //     ]);
+        // }
+        // if ($request->header("api-key") == '123'){
+        //     return $next($request);
+        // }
+        // if ($request->header("api-key") == '456'){
+        //     return response()->json([
+        //         "message" => "no permission to access from mobile app"
+        //     ], 401);
+        // }
+        return $next($request);
     }
 }
