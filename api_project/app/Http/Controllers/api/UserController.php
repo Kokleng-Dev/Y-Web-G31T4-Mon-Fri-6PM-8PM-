@@ -19,6 +19,7 @@ class UserController extends Controller
             'name' => 'required|string|max:75',
             'email' => 'required|string|email|max:100|unique:users',
             'password' => 'required|string|min:8',
+            'role_id' => 'nullable|integer|exists:roles,id'
         ]);
         if($validate->fails()){
             return response()->json([
@@ -27,7 +28,17 @@ class UserController extends Controller
             ], 422);
         }
 
+        // dd($validate->validated());
+
+        // $user = new User();
+        // $user->name = $r->name;
+        // $user->email = $r->email;
+        // $user->password = Hash::make($r->password);
+        // $user->role_id = $r->role_id;
+        // $user->save();
+
         $user = User::create($validate->validated());
+
         return response()->json([
             'status' => 'success',
             'message' => 'User created successfully',
@@ -76,6 +87,7 @@ class UserController extends Controller
             'name' => 'sometimes|required|string|max:75',
             'email' => 'sometimes|required|string|email|max:100|unique:users,email,'.$id,
             'password' => 'sometimes|required|string|min:8',
+            'role_id' => 'sometimes|nullable|integer|exists:roles,id'
         ]);
         if($validate->fails()){
             return response()->json([

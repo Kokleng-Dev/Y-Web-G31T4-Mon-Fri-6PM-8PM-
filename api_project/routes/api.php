@@ -32,6 +32,30 @@ Route::middleware(['auth:sanctum'])->group(function(){
     Route::get('/user/{id}',[App\Http\Controllers\Api\UserController::class, 'get'])->name('users.get');
     Route::put('/user/{id}', [App\Http\Controllers\Api\UserController::class, 'update'])->name('users.update');
     Route::delete('/user/{id}', [App\Http\Controllers\Api\UserController::class, 'delete'])->name('users.delete');
+
+    // role
+    Route::get('/role', [App\Http\Controllers\Api\RoleController::class, 'index']);
+    Route::post('/role', [App\Http\Controllers\Api\RoleController::class, 'create']);
+    Route::get('/role/{id}', [App\Http\Controllers\Api\RoleController::class, 'detail']);
+    Route::put('/role/{id}', [App\Http\Controllers\Api\RoleController::class, 'update']);
+    Route::delete('/role/{id}', [App\Http\Controllers\Api\RoleController::class, 'delete']);
+
+    // Permission
+    Route::get('/permission', [App\Http\Controllers\Api\PermissionController::class, 'index']);
+    Route::post('/permission', [App\Http\Controllers\Api\PermissionController::class, 'create']);
+    Route::get('/permission/{id}', [App\Http\Controllers\Api\PermissionController::class, 'detail']);
+    Route::put('/permission/{id}', [App\Http\Controllers\Api\PermissionController::class, 'update']);
+    Route::delete('/permission/{id}', [App\Http\Controllers\Api\PermissionController::class, 'delete']);
+
+    // Permission Feature
+    Route::get('/permission-feature', [App\Http\Controllers\Api\PermissionFeatureController::class, 'index']);
+    Route::post('/permission-feature', [App\Http\Controllers\Api\PermissionFeatureController::class, 'create']);
+    Route::get('/permission-feature/{id}', [App\Http\Controllers\Api\PermissionFeatureController::class, 'detail']);
+    Route::put('/permission-feature/{id}', [App\Http\Controllers\Api\PermissionFeatureController::class, 'update']);
+    Route::delete('/permission-feature/{id}', [App\Http\Controllers\Api\PermissionFeatureController::class, 'delete']);
+
+    // Role Permission
+    Route::get('/role-permission/{role_id}', [App\Http\Controllers\Api\RolePermissionController::class, 'index']);
 });
 
 
