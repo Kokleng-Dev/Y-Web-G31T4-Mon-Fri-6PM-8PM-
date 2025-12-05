@@ -27,18 +27,31 @@ Route::middleware(['auth:sanctum'])->group(function(){
     Route::get("/product", [App\Http\Controllers\Api\ProductController::class, 'index'])->name('product.index');
 
     //users
-    Route::get('/user', [App\Http\Controllers\Api\UserController::class, 'index'])->name('users.index');
-    Route::post('/user', [App\Http\Controllers\Api\UserController::class, 'store'])->name('users.store');
-    Route::get('/user/{id}',[App\Http\Controllers\Api\UserController::class, 'get'])->name('users.get');
-    Route::put('/user/{id}', [App\Http\Controllers\Api\UserController::class, 'update'])->name('users.update');
-    Route::delete('/user/{id}', [App\Http\Controllers\Api\UserController::class, 'delete'])->name('users.delete');
+    Route::get('/user', [App\Http\Controllers\Api\UserController::class, 'index'])
+            ->middleware('permission:user,list');
+    Route::post('/user', [App\Http\Controllers\Api\UserController::class, 'store'])
+        ->middleware('permission:user,create');
+    Route::get('/user/{id}',[App\Http\Controllers\Api\UserController::class, 'get'])
+        ->middleware('permission:user,edit');
+    Route::put('/user/{id}', [App\Http\Controllers\Api\UserController::class, 'update'])
+        ->middleware('permission:user,edit');
+
+    Route::delete('/user/{id}', [App\Http\Controllers\Api\UserController::class, 'delete'])
+        ->middleware('permission:user,delete');
 
     // role
-    Route::get('/role', [App\Http\Controllers\Api\RoleController::class, 'index']);
-    Route::post('/role', [App\Http\Controllers\Api\RoleController::class, 'create']);
-    Route::get('/role/{id}', [App\Http\Controllers\Api\RoleController::class, 'detail']);
-    Route::put('/role/{id}', [App\Http\Controllers\Api\RoleController::class, 'update']);
-    Route::delete('/role/{id}', [App\Http\Controllers\Api\RoleController::class, 'delete']);
+    Route::get('/role', [App\Http\Controllers\Api\RoleController::class, 'index'])
+        ->middleware('permission:role,list');
+
+    Route::post('/role', [App\Http\Controllers\Api\RoleController::class, 'create'])
+        ->middleware('permission:role,create');
+    Route::get('/role/{id}', [App\Http\Controllers\Api\RoleController::class, 'detail'])
+        ->middleware('permission:role,edit');
+
+    Route::put('/role/{id}', [App\Http\Controllers\Api\RoleController::class, 'update'])
+        ->middleware('permission:role,edit');
+    Route::delete('/role/{id}', [App\Http\Controllers\Api\RoleController::class, 'delete'])
+        ->middleware('permission:role,delete');
 
     // Permission
     Route::get('/permission', [App\Http\Controllers\Api\PermissionController::class, 'index']);
@@ -60,3 +73,6 @@ Route::middleware(['auth:sanctum'])->group(function(){
 });
 
 
+// Route::get('/test', function(){
+//     return checkPermission(1,"user","create");
+// });
