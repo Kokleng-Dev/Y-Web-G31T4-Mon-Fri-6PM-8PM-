@@ -7,7 +7,9 @@ use Illuminate\Http\Request;
 use App\Models\Role;
 use App\Models\Permission;
 use App\Models\PermissionFeature;
+use App\Models\RolePermission;
 use DB;
+use Validator;
 
 class RolePermissionController extends Controller
 {
@@ -64,5 +66,40 @@ class RolePermissionController extends Controller
         }
 
         return response()->json(['role_permissions' => $permissions], 200);
+    }
+
+
+    public function set_permission(Request $r){
+        $validator = Validator::make($r->all(), [
+            'role_id' => 'required|integer|exists:roles,id',
+            'permission_id' => 'required|integer|exists:permissions,id',
+            // 'permission_feature_id' => 'required|integer|exists:permission_features,id',
+            // array
+            'permission_feature_id' => 'required|array',
+        ]);
+
+        if($validator->fails()){
+            return response()->json($validator->errors(), 422);
+        }
+        foreach ($r->permission_feature_id as $value) {
+            $role_permission = RolePermission::where([
+                'role_id' => $validator->validated()['role_id'],
+                'permission_id' => $validator->validated()['permission_id'],
+                'permission_feature_id' => $value
+            ])->first();
+            if($role_permission){
+                $role_permission->forceDelete();
+            } else {
+                DB::table('role_permissions')->insert([
+                    'role_id' => $validator->validated()['role_id'],
+                    'permission_id' => $validator->validated()['permission_id'],
+                    'permission_feature_id' => $value
+                ]);
+            }
+        }
+
+
+
+        return response()->json(['message' => 'Role permission updated successfully'], 200);
     }
 }
