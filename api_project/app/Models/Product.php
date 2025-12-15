@@ -8,4 +8,24 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Product extends Model
 {
     use SoftDeletes;
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($user) {
+            $user->created_by = auth()->user()->id;
+        });
+        static::updating(function ($user) {
+            $user->updated_by = auth()->user()->id;
+        });
+        static::deleting(function ($user) {
+            $user->deleted_by = auth()->user()->id;
+            $user->save();
+        });
+    }
+
+    public function category(){
+        return $this->belongsTo(Category::class);
+    }
 }

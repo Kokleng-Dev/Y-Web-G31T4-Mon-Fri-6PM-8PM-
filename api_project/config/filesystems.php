@@ -46,6 +46,14 @@ return [
             'throw' => false,
             'report' => false,
         ],
+        'custom' => [
+            'driver' => 'local',
+            'root' => storage_path('../public'),
+            'url' => env('APP_URL').'/public',
+            'visibility' => 'public',
+            'throw' => false,
+            'report' => false,
+        ],
 
         's3' => [
             'driver' => 's3',

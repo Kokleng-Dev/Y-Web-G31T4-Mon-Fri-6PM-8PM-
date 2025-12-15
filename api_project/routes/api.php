@@ -70,6 +70,32 @@ Route::middleware(['auth:sanctum'])->group(function(){
     // Role Permission
     Route::get('/role-permission/{role_id}', [App\Http\Controllers\Api\RolePermissionController::class, 'index']);
     Route::post('/set-permission', [App\Http\Controllers\Api\RolePermissionController::class, 'set_permission']);
+
+    // Customer
+    Route::get('/customer', [App\Http\Controllers\Api\CustomerController::class, 'index']);
+    Route::post('/customer', [App\Http\Controllers\Api\CustomerController::class, 'create']);
+    Route::get('/customer/{id}', [App\Http\Controllers\Api\CustomerController::class, 'detail']);
+    Route::put('/customer/{id}', [App\Http\Controllers\Api\CustomerController::class, 'update']);
+    Route::delete('/customer/{id}', [App\Http\Controllers\Api\CustomerController::class, 'delete']);
+
+    // Category
+    Route::get('/category', [App\Http\Controllers\Api\CategoryController::class, 'index']);
+    Route::post('/category', [App\Http\Controllers\Api\CategoryController::class, 'create']);
+    Route::get('/category/{id}', [App\Http\Controllers\Api\CategoryController::class, 'detail']);
+    Route::put('/category/{id}', [App\Http\Controllers\Api\CategoryController::class, 'update']);
+    Route::delete('/category/{id}', [App\Http\Controllers\Api\CategoryController::class, 'delete']);
+
+    // Product
+    Route::get('/product', [App\Http\Controllers\Api\ProductController::class, 'index']);
+    Route::post('/product', [App\Http\Controllers\Api\ProductController::class, 'create']);
+    Route::get('/product/{id}', [App\Http\Controllers\Api\ProductController::class, 'detail']);
+    Route::post('/product/{id}', [App\Http\Controllers\Api\ProductController::class, 'update']);
+    Route::delete('/product/{id}', [App\Http\Controllers\Api\ProductController::class, 'delete']);
+
+    // Order
+    Route::get('/order',[App\Http\Controllers\Api\OrderController::class, 'index']);
+    Route::post('/order', [App\Http\Controllers\Api\OrderController::class, 'create']);
+    Route::delete('/order/void/{id}', [App\Http\Controllers\Api\OrderController::class, 'delete']);
 });
 
 
